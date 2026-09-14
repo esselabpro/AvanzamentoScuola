@@ -181,7 +181,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap) {
             if (materiaInCorso !== "") {
                 testo_lezione = `🔴 Attività ora in corso: <strong>${materiaInCorso}</strong>`;
             } else {
-                testo_lezione = "Intervallo o lezioni terminate per stasera.";
+                testo_lezione = "Lezioni terminate per stasera.";
             }
         }
     }
