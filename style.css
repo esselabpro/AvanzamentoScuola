@@ -1,0 +1,181 @@
+/* Stili generali e reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 15px;
+    /* Margine ridotto per non uscire dagli schermi piccoli */
+}
+
+/* Card principale adattiva */
+.card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    max-width: 600px;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    font-size: 1.25rem;
+    color: #111;
+    margin-bottom: 20px;
+}
+
+/* Date di inizio e fine scuola */
+.dates-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 6px;
+}
+
+/* Barra di avanzamento responsive */
+.progress-container {
+    position: relative;
+    background-color: #e2e8f0;
+    height: 28px;
+    /* Leggermente più alta per facilitare la lettura su touch */
+    border-radius: 8px;
+    margin: 20px 0 40px 0;
+}
+
+.progress-bar {
+    background-color: #3b82f6;
+    height: 100%;
+    border-radius: 8px 0 0 8px;
+    width: 0%;
+    transition: width 0.6s ease;
+}
+
+/* Indicatore di oggi */
+/*
+.today-marker {
+    position: absolute;
+    top: -8px;
+    bottom: -24px;
+    width: 2px;
+    background-color: #1d4ed8;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+*/
+
+.today-label {
+    position: absolute;
+    top: 34px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #1d4ed8;
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2px 6px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Testi dentro le barre */
+.bar-text-fatti,
+.bar-text-rimanenti {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.bar-text-fatti {
+    left: 0;
+    color: white;
+    padding-left: 8px;
+    justify-content: flex-start;
+}
+
+.bar-text-rimanenti {
+    right: 0;
+    color: #475569;
+    padding-right: 8px;
+    justify-content: flex-end;
+}
+
+/* Box Report a griglia verticale per smartphone */
+.report-box {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 15px;
+}
+
+.report-box h3 {
+    margin-top: 0;
+    font-size: 0.95rem;
+    color: #1d4ed8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.report-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+.status-msg {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed #cbd5e1;
+    font-weight: bold;
+    text-align: center;
+    color: #334155;
+    font-size: 0.9rem;
+}
+
+.loading {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* Media Query specifica per smartphone molto stretti (< 480px) */
+@media (max-width: 480px) {
+    .card {
+        padding: 12px;
+    }
+
+    h1 {
+        font-size: 1.1rem;
+    }
+
+    .dates-info {
+        font-size: 0.75rem;
+    }
+
+    .report-row {
+        font-size: 0.8rem;
+    }
+}
