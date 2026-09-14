@@ -72,9 +72,9 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap) {
     let data_oggi_iso, oraAttuale, minutiAttuali, secondiAttuali;
 
     if (BEBUG === true) { // PER FARE TEST
-        data_oggi_iso = '2026-09-14';
+        data_oggi_iso = '2026-09-15';
         oraAttuale = 21;
-        minutiAttuali = 5;
+        minutiAttuali = 0;
         secondiAttuali = 0;
     } else {
         const dataItaliana = new Date().toLocaleString("en-US", { timeZone: "Europe/Rome" });
@@ -87,7 +87,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap) {
         minutiAttuali = adesso.getMinutes();
         secondiAttuali = adesso.getSeconds();
     }
-    // "if Avanzate"
+
     let ora_stampa = oraAttuale < 10 ? "0" + oraAttuale : oraAttuale;
     let minuti_stampa = minutiAttuali < 10 ? "0" + minutiAttuali : minutiAttuali;
     let secondi_stampa = secondiAttuali < 10 ? "0" + secondiAttuali : secondiAttuali;
@@ -97,7 +97,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap) {
     const inizio_scuola = n_gg_date[0][0];
     const fine_scuola = n_gg_date[n_gg_date.length - 1][0];
 
-    // --- CALCO DEL GIORNO CORRENTE ---
+    // --- GESTIONE DEL GIORNO CORRENTE ---
     const [annoIso, meseIso, giornoIso] = data_oggi_iso.split('-').map(Number);
     const dataRiferimento = new Date(annoIso, meseIso - 1, giornoIso);
     let nomeGiornoOggiStampa = dataRiferimento.toLocaleDateString('it-IT', { weekday: 'long' });
@@ -106,7 +106,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap) {
 
     // Stato della lezione odierna ottenuta direttamente da date_boleane.csv
     let gg_totali = 0;
-    let attivitaOggi = -1; // -1 se la data non è nel file
+    let attivitaOggi = -1;
     let gg_fatti = 0;
     let flag = true;
 
@@ -138,7 +138,6 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap) {
     const perc_trascorsa = (gg_fatti / gg_totali) * 100;
     const perc_rimanente = (rimanenti / gg_totali) * 100;
 
-    // --- CONTROLLO PRIMA SULLE DATE BOLEANE ---
     let materiaInCorso = "";
     let testo_lezione = "";
 
@@ -186,6 +185,29 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap) {
         }
     }
 
+    // --- COSTRUZIONE DELLA LISTA MATERIE PER OGGI (solo se ci sono lezioni oggi) ---
+    let elencoMaterieHtml = "";
+
+    if (attivitaOggi === 1) {
+        const rigaMaterieOGgi = orarioMap[nomeGiornoOggi];
+        if (rigaMaterieOGgi) {
+            let elementiLista = [];
+            for (let k = 0; k < intestazioneOrari.length; k++) {
+                const materia = rigaMaterieOGgi[k];
+                const orarioSlot = intestazioneOrari[k];
+                if (materia && materia.toLowerCase() !== 'nullo') {
+                    elementiLista.push(`&bull; ${orarioSlot}: ${materia}`);
+                }
+            }
+            if (elementiLista.length > 0) {
+                elencoMaterieHtml = `<div class="report-row" style="flex-direction: column; align-items: flex-start;">
+                    <span>Materie di oggi (${nomeGiornoOggiStampa}):</span>
+                    <strong style="margin-top: 4px; font-weight: normal; line-height: 1.4;">${elementiLista.join('<br>')}</strong>
+                </div>`;
+            }
+        }
+    }
+    // -----------------------------------------------------------------
     const percentualeBarra = (gg_fatti / gg_totali) * 100;
     const percentualeOggi = Math.min(100, Math.max(0, (gg_fatti / gg_totali) * 100));
 
@@ -229,6 +251,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap) {
                 <span>Giorni Rimanenti:</span>
                 <strong>${rimanenti} (${perc_rimanente.toFixed(2)}%)</strong>
             </div>
+            ${elencoMaterieHtml}
             <div class="status-msg">
                 ${testo_lezione}
             </div>
@@ -236,17 +259,6 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap) {
     `;
 
     document.getElementById('app').innerHTML = html;
-
-    // --- Stampe di Controllo in Console ---
-    console.log("Modalità Debug:", BEBUG);
-    console.log("Data ISO usata:", data_oggi_iso);
-    console.log("Attività oggi (0 o 1):", attivitaOggi);
-    if (attivitaOggi === 1) {
-        console.log("Giorno cercato (normalizzato):", nomeGiornoOggi);
-        console.log("Orari intestazione:", intestazioneOrari);
-        console.log("Riga trovata nel dizionario:", orarioMap[nomeGiornoOggi]);
-    }
-    // -------------------------
 }
 
 // Avvio dell'app con il "caricatore multi-CSV"
