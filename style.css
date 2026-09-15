@@ -128,7 +128,7 @@ h1 {
 
 .report-box h3 {
     margin-top: 0;
-    font-size: 0.95rem;
+    font-size: 1.02rem;
     color: #1d4ed8;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -139,9 +139,38 @@ h1 {
 .report-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid #f1f5f9;
     font-family: monospace;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+}
+
+.report-row:last-of-type {
+    border-bottom: none;
+}
+
+/* Stile dedicato per il blocco delle materie di oggi */
+.report-box .report-row[style*="flex-direction: column"] {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 12px;
+    border-radius: 6px;
+    margin: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* Più Evidenziata la riga dei "Giorni Fatti" e dei "Giorni Rimanenti" */
+.report-row:nth-last-child(4),
+.report-row:nth-last-child(3) {
+    /* Testo più scuro e marcato */
+    font-weight: bold;
+    color: #341674;
+    font-size: 1.03rem;
+    /* Sfondino azzurrino chiaro molto leggero */   
+    background-color: #edfbe6;
+    border-radius: 6px;
+    margin: 2px 0;
+    border-bottom: none;
 }
 
 .status-msg {
@@ -150,7 +179,7 @@ h1 {
     border-top: 1px dashed #cbd5e1;
     font-weight: bold;
     text-align: center;
-    color: #334155;
+    color: #203047;
     font-size: 0.9rem;
 }
 
