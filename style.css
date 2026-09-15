@@ -29,7 +29,7 @@ body {
 
 h1 {
     text-align: center;
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     color: #111;
     margin-bottom: 20px;
 }
@@ -47,15 +47,15 @@ h1 {
 /* Barra di avanzamento responsive */
 .progress-container {
     position: relative;
-    background-color: #e2e8f0;
-    height: 28px;
-    /* Leggermente più alta per facilitare la lettura su touch */
+    background-color: #d4ddea;
+    /* Leggermente più alta per facilitare la lettura */
+    height: 36px;
     border-radius: 8px;
     margin: 20px 0 40px 0;
 }
 
 .progress-bar {
-    background-color: #3b82f6;
+    background-color: #226adf;
     height: 100%;
     border-radius: 8px 0 0 8px;
     width: 0%;
@@ -105,7 +105,7 @@ h1 {
 
 .bar-text-fatti {
     left: 0;
-    color: white;
+    color: rgb(249, 249, 249);
     padding-left: 8px;
     justify-content: flex-start;
 }
@@ -142,7 +142,7 @@ h1 {
     padding: 6px 0;
     border-bottom: 1px solid #f1f5f9;
     font-family: monospace;
-    font-size: 0.95rem;
+    font-size: 0.98rem;
 }
 
 .report-row:last-of-type {
@@ -157,6 +157,7 @@ h1 {
     border-radius: 6px;
     margin: 12px 0;
     border-bottom: 1px solid #e2e8f0;
+    color: #08484d;
 }
 
 /* Più Evidenziata la riga dei "Giorni Fatti" e dei "Giorni Rimanenti" */
@@ -165,8 +166,7 @@ h1 {
     /* Testo più scuro e marcato */
     font-weight: bold;
     color: #341674;
-    font-size: 1.03rem;
-    /* Sfondino azzurrino chiaro molto leggero */   
+    font-size: 1.03rem; 
     background-color: #edfbe6;
     border-radius: 6px;
     margin: 2px 0;
@@ -179,13 +179,13 @@ h1 {
     border-top: 1px dashed #cbd5e1;
     font-weight: bold;
     text-align: center;
-    color: #203047;
+    color: #472020;
     font-size: 0.9rem;
 }
 
 .loading {
     text-align: center;
-    color: #666;
+    color: #666666;
     font-style: italic;
     padding: 20px;
 }
