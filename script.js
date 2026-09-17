@@ -69,13 +69,15 @@ async function caricaDatiCsv() {
                 }
             }
         }
-
+        const oraInizioPerStampa = intestazioneOrari[0];
+        const oraFinePerStampa = intestazioneOrari[intestazioneOrari.length - 1]; // l'ultimo campo della prima riga
+        
         // Primo avvio immediato appena i dati sono caricati
-        elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap);
+        elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPerStampa, oraFinePerStampa);
 
         // Aggiornamento automatico ogni secondo. Uso una arrow function per riuscire a passare i parametri
         setInterval(() => {
-            elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap);
+            elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPerStampa, oraFinePerStampa);
         }, 1000);
 
     } catch (errore) {
@@ -83,7 +85,7 @@ async function caricaDatiCsv() {
     }
 }
 
-function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap) {
+function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPerStampa, oraFinePerStampa) {
     ////////////////////////////////////////////////////////////
     // Modalità di Sviluppo / Debug
     const BEBUG = false;
@@ -169,8 +171,8 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap) {
         testo_lezione = "Data odierna non presente nel calendario scolastico.";
     } else {
         if (oraAttuale < 18) {
-            testo_lezione = "🔴 Stasera sono previste lezioni (dalle 18:00)!";
-        } else if (oraAttuale >= 23) {
+            testo_lezione = "🔴 Oggi sono previste lezioni dalle " + oraInizioPerStampa + "!";
+        } else if (oraAttuale >= oraFinePerStampa) {
             testo_lezione = "Lezioni di stasera terminate.";
         } else {
             const rigaOrarioGiorno = orarioMap[nomeGiornoOggi];
