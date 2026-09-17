@@ -173,7 +173,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPe
         if (oraAttuale < 18) {
             testo_lezione = "🔴 Oggi sono previste lezioni dalle " + oraInizioPerStampa + "!";
         } else if (oraAttuale >= oraFinePerStampa) {
-            testo_lezione = "Lezioni di stasera terminate.";
+            testo_lezione = "Lezioni terminate per oggi.";
         } else {
             const rigaOrarioGiorno = orarioMap[nomeGiornoOggi];
 
@@ -193,7 +193,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPe
 
                 if (indiceSlotAttivo !== -1) {
                     const voceTrovata = rigaOrarioGiorno[indiceSlotAttivo];
-                    if (voceTrovata && voceTrovata.toLowerCase() !== 'nullo') {
+                    if (voceTrovata && voceTrovata.trim() !== "") {
                         materiaInCorso = voceTrovata;
                     }
                 }
@@ -202,7 +202,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPe
             if (materiaInCorso !== "") {
                 testo_lezione = `🔴 Attività ora in corso: <strong>${materiaInCorso}</strong>`;
             } else {
-                testo_lezione = "Lezioni terminate per stasera.";
+                testo_lezione = "Lezioni terminate per oggi.";
             }
         }
     }
@@ -217,7 +217,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPe
             for (let k = 0; k < intestazioneOrari.length; k++) {
                 const materia = rigaMaterieOGgi[k];
                 const orarioSlot = intestazioneOrari[k];
-                if (materia && materia.toLowerCase() !== 'nullo') {
+                if (materia && materia.trim() !== "" ) {
                     elementiLista.push(`&bull; ${orarioSlot}: ${materia}`);
                 }
             }
