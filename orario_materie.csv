@@ -1,6 +1,6 @@
 orari_inizio_lezioni;18:00;19:00;19:55;20:10;21:05;22:00;22:05
 lunedì;TPS;Italiano;Primo Intervallo;Italiano;Inglese;Secondo Intervallo;Inglese
 martedì;Matematica;Matematica;Primo Intervallo;Informatica;Informatica;nullo;nullo
-mercoledì;Informatica Laboratorio;Informatica Laboratorio;Primo Intervallo;Italiano;GPO o GPO Laboratorio;secondo Intervallo;GPO o GPO Laboratorio
-giovedì;TPS Laboratorio;TPS Laboratorio;Primo Intervallo;Storia;Storia;secondo Intervallo;Sistemi
+mercoledì;Informatica Laboratorio;Informatica Laboratorio;Primo Intervallo;GPO Laboratorio;GPO;Secondo Intervallo;Italiano
+giovedì;TPS Laboratorio;TPS Laboratorio;Primo Intervallo;Storia;Storia;Secondo Intervallo;Sistemi
 venerdì;Sistemi Laboratorio;Sistemi Laboratorio;Primo Intervallo;Matematica;nullo;nullo;nullo

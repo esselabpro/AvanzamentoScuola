@@ -21,6 +21,26 @@ async function caricaDatiCsv() {
         console.log(testoOrario);
         // 1. Elaborazione date_boleane.csv
         const righeDate = testoDate.trim().split('\n');
+
+        // Estrazione della prima riga per completare l'intestazione in html (es. "2026/2027;5°I")
+        let annoScolastico = "";
+        let classeSezione = "";
+
+        if (righeDate.length > 0) {
+            const primaRigaConfig = righeDate[0].trim();
+            if (primaRigaConfig) {
+                const partiConfig = primaRigaConfig.split(';');
+                annoScolastico = partiConfig[0] ? partiConfig[0].trim() : "";
+                classeSezione = partiConfig[1] ? partiConfig[1].trim() : "";
+            }
+            // Rimuoviamo la prima riga così il ciclo successivo parte dalle date
+            righeDate.shift();
+        }
+
+        // Popoliamo subito l'intestazione HTML con i dati trovati nel CSV
+        document.getElementById('annoScolastico').textContent = annoScolastico;
+        document.getElementById('classeSezione').textContent = classeSezione;
+
         const n_gg_date = [];
         for (let riga of righeDate) {
             riga = riga.trim();
@@ -149,7 +169,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap) {
         testo_lezione = "Data odierna non presente nel calendario scolastico.";
     } else {
         if (oraAttuale < 18) {
-            testo_lezione = "Stasera sono previste lezioni (dalle 18:00)!";
+            testo_lezione = "🔴 Stasera sono previste lezioni (dalle 18:00)!";
         } else if (oraAttuale >= 23) {
             testo_lezione = "Lezioni di stasera terminate.";
         } else {
