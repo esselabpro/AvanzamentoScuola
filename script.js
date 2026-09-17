@@ -69,15 +69,15 @@ async function caricaDatiCsv() {
                 }
             }
         }
-        const oraInizioPerStampa = intestazioneOrari[0];
-        const oraFinePerStampa = intestazioneOrari[intestazioneOrari.length - 1]; // l'ultimo campo della prima riga
-        
+        const oraInizioScuola = intestazioneOrari[0];
+        const oraFineScuola = intestazioneOrari[intestazioneOrari.length - 1]; // l'ultimo campo della prima riga
+
         // Primo avvio immediato appena i dati sono caricati
-        elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPerStampa, oraFinePerStampa);
+        elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioScuola, oraFineScuola);
 
         // Aggiornamento automatico ogni secondo. Uso una arrow function per riuscire a passare i parametri
         setInterval(() => {
-            elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPerStampa, oraFinePerStampa);
+            elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioScuola, oraFineScuola);
         }, 1000);
 
     } catch (errore) {
@@ -85,7 +85,7 @@ async function caricaDatiCsv() {
     }
 }
 
-function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPerStampa, oraFinePerStampa) {
+function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioScuola, oraFineScuola) {
     ////////////////////////////////////////////////////////////
     // Modalità di Sviluppo / Debug
     const BEBUG = false;
@@ -94,9 +94,9 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPe
     let data_oggi_iso, oraAttuale, minutiAttuali, secondiAttuali;
 
     if (BEBUG === true) { // PER FARE TEST
-        data_oggi_iso = '2026-09-15';
-        oraAttuale = 21;
-        minutiAttuali = 0;
+        data_oggi_iso = '2026-09-18';
+        oraAttuale = 17;
+        minutiAttuali = 10;
         secondiAttuali = 0;
     } else {
         const dataItaliana = new Date().toLocaleString("en-US", { timeZone: "Europe/Rome" });
@@ -170,9 +170,9 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPe
     } else if (attivitaOggi === -1) {
         testo_lezione = "Data odierna non presente nel calendario scolastico.";
     } else {
-        if (oraAttuale < 18) {
-            testo_lezione = "🔴 Oggi sono previste lezioni dalle " + oraInizioPerStampa + "!";
-        } else if (oraAttuale >= oraFinePerStampa) {
+        if (oraAttuale < parseInt(oraInizioScuola)) {
+            testo_lezione = "🔴 Oggi sono previste lezioni dalle " + oraInizioScuola + "!";
+        } else if (oraAttuale >= parseInt(oraFineScuola)) {
             testo_lezione = "Lezioni terminate per oggi.";
         } else {
             const rigaOrarioGiorno = orarioMap[nomeGiornoOggi];
@@ -199,7 +199,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPe
                 }
             }
 
-            if (materiaInCorso !== "") {
+            if (materiaInCorso !== "" && materiaInCorso.toLowerCase() !== "fine delle lezioni" && oraAttuale < parseInt(oraFineScuola)) {
                 testo_lezione = `🔴 Attività ora in corso: <strong>${materiaInCorso}</strong>`;
             } else {
                 testo_lezione = "Lezioni terminate per oggi.";
@@ -217,7 +217,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioPe
             for (let k = 0; k < intestazioneOrari.length; k++) {
                 const materia = rigaMaterieOGgi[k];
                 const orarioSlot = intestazioneOrari[k];
-                if (materia && materia.trim() !== "" ) {
+                if (materia && materia.trim() !== "") {
                     elementiLista.push(`&bull; ${orarioSlot}: ${materia}`);
                 }
             }
