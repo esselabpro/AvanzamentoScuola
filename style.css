@@ -12,9 +12,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    padding: 15px;
-    /* Margine ridotto per non uscire dagli schermi piccoli */
+    min-height: 90vh;
+    padding: 8px;
 }
 
 /* Card principale adattiva */
