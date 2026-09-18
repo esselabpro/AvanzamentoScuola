@@ -190,13 +190,13 @@ h1 {
 }
 
 /* Media Query specifica per smartphone molto stretti (< 480px) */
-@media (max-width: 480px) {
+@media (max-width: 600px) {
     .card {
         padding: 12px;
     }
 
     h1 {
-        font-size: 1.1rem;
+        font-size: 1.25rem;
     }
 
     .dates-info {
