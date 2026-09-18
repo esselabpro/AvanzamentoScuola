@@ -18,11 +18,11 @@ async function caricaDatiCsv() {
 
         const testoDate = await rispostaDate.text();
         const testoOrario = await rispostaOrario.text();
-        console.log(testoOrario);
+        console.log("Orario settimanale:\n", testoOrario);
+
         // 1. Elaborazione date_boleane.csv
         const righeDate = testoDate.trim().split('\n');
 
-        // Estrazione della prima riga per completare l'intestazione in html (es. "2026/2027;5°I")
         let annoScolastico = "";
         let classeSezione = "";
 
@@ -33,11 +33,9 @@ async function caricaDatiCsv() {
                 annoScolastico = partiConfig[0] ? partiConfig[0].trim() : "";
                 classeSezione = partiConfig[1] ? partiConfig[1].trim() : "";
             }
-            // Rimuoviamo la prima riga così il ciclo successivo parte dalle date
             righeDate.shift();
         }
 
-        // Popoliamo subito l'intestazione HTML con i dati trovati nel CSV
         document.getElementById('annoScolastico').textContent = annoScolastico;
         document.getElementById('classeSezione').textContent = classeSezione;
 
@@ -60,24 +58,22 @@ async function caricaDatiCsv() {
             if (riga) {
                 const parti = riga.split(';');
                 if (i === 0) {
-                    // La prima riga contiene gli orari: 18:00; 19:00; ecc. (puliti da spazi)
                     intestazioneOrari = parti.slice(1).map(ora => ora.trim());
                 } else {
-                    // La prima colonna è il giorno: normalizzata (minuscola, senza accenti e spazi)
                     const giornoKey = parti[0].trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
                     orarioMap[giornoKey] = parti.slice(1);
                 }
             }
         }
+
         const oraInizioScuola = intestazioneOrari[0];
-        const oraFineScuola = intestazioneOrari[intestazioneOrari.length - 1]; // l'ultimo campo della prima riga
 
-        // Primo avvio immediato appena i dati sono caricati
-        elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioScuola, oraFineScuola);
+        // Primo avvio immediato
+        elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioScuola);
 
-        // Aggiornamento automatico ogni secondo. Uso una arrow function per riuscire a passare i parametri
+        // Aggiornamento automatico ogni secondo
         setInterval(() => {
-            elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioScuola, oraFineScuola);
+            elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioScuola);
         }, 1000);
 
     } catch (errore) {
@@ -85,7 +81,7 @@ async function caricaDatiCsv() {
     }
 }
 
-function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioScuola, oraFineScuola) {
+function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioScuola) {
     ////////////////////////////////////////////////////////////
     // Modalità di Sviluppo / Debug
     const BEBUG = false;
@@ -94,9 +90,9 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioSc
     let data_oggi_iso, oraAttuale, minutiAttuali, secondiAttuali;
 
     if (BEBUG === true) { // PER FARE TEST
-        data_oggi_iso = '2026-09-18';
-        oraAttuale = 17;
-        minutiAttuali = 10;
+        data_oggi_iso = '2026-10-02'; // Venerdì di prova
+        oraAttuale = 21;
+        minutiAttuali = 5;
         secondiAttuali = 0;
     } else {
         const dataItaliana = new Date().toLocaleString("en-US", { timeZone: "Europe/Rome" });
@@ -126,7 +122,32 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioSc
     let nomeGiornoOggi = nomeGiornoOggiStampa.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     // -------------------------------------------------------------
 
-    // Stato della lezione odierna ottenuta direttamente da date_boleane.csv
+    // Calcolo dei minuti totali correnti da inizio giornata
+    const minutiCorrentiTotali = oraAttuale * 60 + minutiAttuali;
+
+    // --- TROVIAMO L'ORARIO DI FINE SCUOLA SPECIFICO PER OGGI DAL CSV ---
+    let oraFineScuolaOggi = "23:00"; // Valore di riserva
+    const rigaOrarioOggiFissa = orarioMap[nomeGiornoOggi];
+
+    if (rigaOrarioOggiFissa) {
+        for (let k = 0; k < rigaOrarioOggiFissa.length; k++) {
+            const materiaSlot = rigaOrarioOggiFissa[k];
+            if (materiaSlot && materiaSlot.trim().toLowerCase() === "fine delle lezioni") {
+                oraFineScuolaOggi = intestazioneOrari[k]; // Es. "21:05" per venerdì
+                break;
+            }
+        }
+    }
+
+    // Convertiamo inizio e fine in minuti totali per un confronto preciso
+    const partiFine = oraFineScuolaOggi.split(':');
+    const minutiFineTotali = parseInt(partiFine[0]) * 60 + parseInt(partiFine[1]);
+
+    const partiInizio = oraInizioScuola.split(':');
+    const minutiInizioTotali = parseInt(partiInizio[0]) * 60 + parseInt(partiInizio[1]);
+    // -------------------------------------------------------------
+
+    // Stato della lezione odierna
     let gg_totali = 0;
     let attivitaOggi = -1;
     let gg_fatti = 0;
@@ -145,7 +166,8 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioSc
         if (dataRiga < data_oggi_iso) {
             gg_fatti += lezioneProgrammata;
         } else if (dataRiga === data_oggi_iso) {
-            if (lezioneProgrammata === 1 && oraAttuale >= 23) {
+            // Se oggi si fa lezione e abbiamo superato l'orario di fine al minuto esatto, consideriamo il giorno fatto
+            if (lezioneProgrammata === 1 && minutiCorrentiTotali >= minutiFineTotali) {
                 gg_fatti += 1;
             }
         }
@@ -170,16 +192,15 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioSc
     } else if (attivitaOggi === -1) {
         testo_lezione = "Data odierna non presente nel calendario scolastico.";
     } else {
-        if (oraAttuale < parseInt(oraInizioScuola)) {
+        if (minutiCorrentiTotali < minutiInizioTotali) {
             testo_lezione = "🔴 Oggi sono previste lezioni dalle " + oraInizioScuola + "!";
-        } else if (oraAttuale >= parseInt(oraFineScuola)) {
+        } else if (minutiCorrentiTotali >= minutiFineTotali) {
             testo_lezione = "Lezioni terminate per oggi.";
         } else {
             const rigaOrarioGiorno = orarioMap[nomeGiornoOggi];
 
             if (rigaOrarioGiorno) {
                 let indiceSlotAttivo = -1;
-                const minutiCorrentiTotali = oraAttuale * 60 + minutiAttuali;
 
                 for (let j = 0; j < intestazioneOrari.length; j++) {
                     const partiOra = intestazioneOrari[j].split(':');
@@ -199,7 +220,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioSc
                 }
             }
 
-            if (materiaInCorso !== "" && materiaInCorso.toLowerCase() !== "fine delle lezioni" && oraAttuale < parseInt(oraFineScuola)) {
+            if (materiaInCorso !== "" && materiaInCorso.toLowerCase() !== "fine delle lezioni" && minutiCorrentiTotali < minutiFineTotali) {
                 testo_lezione = `🔴 Attività ora in corso: <strong>${materiaInCorso}</strong>`;
             } else {
                 testo_lezione = "Lezioni terminate per oggi.";
@@ -207,7 +228,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioSc
         }
     }
 
-    // --- COSTRUZIONE DELLA LISTA MATERIE PER OGGI (solo se ci sono lezioni oggi) ---
+    // --- COSTRUZIONE DELLA LISTA MATERIE PER OGGI ---
     let elencoMaterieHtml = "";
 
     if (attivitaOggi === 1) {
@@ -283,5 +304,5 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioSc
     document.getElementById('app').innerHTML = html;
 }
 
-// Avvio dell'app con il "caricatore multi-CSV"
+// Avvio dell'app
 caricaDatiCsv();
