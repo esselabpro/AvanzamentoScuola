@@ -60,20 +60,6 @@ h1 {
     width: 0%;
     transition: width 0.6s ease;
 }
-
-/* Indicatore di oggi */
-/*
-.today-marker {
-    position: absolute;
-    top: -8px;
-    bottom: -24px;
-    width: 2px;
-    background-color: #1d4ed8;
-    transform: translateX(-50%);
-    z-index: 3;
-}
-*/
-
 .today-label {
     position: absolute;
     top: 34px;
@@ -141,7 +127,7 @@ h1 {
     padding: 6px 0;
     border-bottom: 1px solid #f1f5f9;
     font-family: monospace;
-    font-size: 0.98rem;
+    font-size: 1rem;
 }
 
 .report-row:last-of-type {
