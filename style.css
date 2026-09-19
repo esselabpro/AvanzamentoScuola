@@ -146,8 +146,8 @@ h1 {
 }
 
 /* Più Evidenziata la riga dei "Giorni Fatti" e dei "Giorni Rimanenti" */
-.report-row:nth-last-child(4),
-.report-row:nth-last-child(3) {
+.report-row:nth-child(6),
+.report-row:nth-child(7) {
     /* Testo più scuro e marcato */
     font-weight: bold;
     color: #341674;
