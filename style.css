@@ -47,8 +47,7 @@ h1 {
 .progress-container {
     position: relative;
     background-color: #d4ddea;
-    /* Leggermente più alta per facilitare la lettura */
-    height: 36px;
+    height: 40px;
     border-radius: 8px;
     margin: 20px 0 40px 0;
 }
@@ -175,7 +174,7 @@ h1 {
     padding: 20px;
 }
 
-/* Media Query specifica per smartphone molto stretti (< 480px) */
+/* Media Query specifica per smartphone stretti (< 600px) */
 @media (max-width: 600px) {
     .card {
         padding: 12px;
