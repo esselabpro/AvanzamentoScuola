@@ -5,6 +5,12 @@
     padding: 0;
 }
 
+/* Elimina gli a capo indesiderati del testo su mobile */
+html {
+    -webkit-text-size-adjust: 100%; /* Blocca lo zoom automatico su iOS */
+    text-size-adjust: 100%;         /* Blocca lo zoom automatico standard */
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: #f4f6f9;
