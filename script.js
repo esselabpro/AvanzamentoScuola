@@ -288,11 +288,11 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioSc
             </div>
             <div class="report-row">
                 <span>Giorni Fatti:</span>
-                <strong>${gg_fatti} (${perc_trascorsa.toFixed(2)}%)</strong>
+                <strong>${gg_fatti} (${perc_trascorsa.toFixed(1)}%)</strong>
             </div>
             <div class="report-row">
                 <span>Giorni Rimanenti:</span>
-                <strong>${rimanenti} (${perc_rimanente.toFixed(2)}%)</strong>
+                <strong>${rimanenti} (${perc_rimanente.toFixed(1)}%)</strong>
             </div>
             ${elencoMaterieHtml}
             <div class="status-msg">
