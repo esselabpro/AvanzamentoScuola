@@ -7,10 +7,8 @@
 
 /* Elimina gli a capo indesiderati del testo su mobile */
 html {
-    -webkit-text-size-adjust: 100%;
-    /* Blocca lo zoom automatico su iOS */
-    text-size-adjust: 100%;
-    /* Blocca lo zoom automatico standard */
+    -webkit-text-size-adjust: 100%;/* Blocca lo zoom automatico su iOS */    
+    text-size-adjust: 100%;/* Blocca lo zoom automatico standard */    
 }
 
 body {
@@ -129,27 +127,28 @@ h1 {
     text-align: center;
 }
 
-/* Applica la griglia solo alle righe standard del report */
+/* Applica la griglia flessibile alle righe standard del report */
 .report-row:not([style*="flex-direction: column"]) {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto; /* minmax(0, 1fr) fa stringere l'etichetta a sinistra se lo spazio manca, salvando il numero a destra */
     align-items: center;
-    gap: 5px; /* AGGIUNTO: Forza uno spazio di sicurezza tra sinistra e destra per evitare che si schiaccino */
-    padding: 6px 4px; /* Aggiunto un micro-padding laterale per non incollarsi ai bordi del box */
+    gap: 8px;
+    padding: 6px 0;
     border-bottom: 1px solid #f1f5f9;
     font-family: monospace;
-    font-size: 0.95rem; /* Leggermente più compatto per dare respiro su mobile/zoom */
+    font-size: 1rem; /* Mantiene la dimensione grande e leggibile che desideri */
 }
 
-/* Impedisce il testo a capo solo sulle righe standard */
+/* Impedisce il testo a capo sulle righe standard */
 .report-row:not([style*="flex-direction: column"]) span,
 .report-row:not([style*="flex-direction: column"]) strong {
     white-space: nowrap; 
 }
 
-/* Forza il lato destro delle righe standard a stare rigorosamente a destra */
+/* Forza il lato destro a restare allineato a destra in modo pulito */
 .report-row:not([style*="flex-direction: column"]) strong {
     text-align: right;
+    font-variant-numeric: tabular-nums; /* Incolonna perfettamente i numeri */
 }
 
 .report-row:last-of-type {
@@ -177,7 +176,6 @@ h1 {
 /* Più Evidenziata la riga dei "Giorni Fatti" e dei "Giorni Rimanenti" */
 .report-row:nth-child(6),
 .report-row:nth-child(7) {
-    /* Testo più scuro e marcato */
     font-weight: bold;
     color: #341674;
     font-size: 1.03rem;
@@ -204,7 +202,7 @@ h1 {
     padding: 20px;
 }
 
-/* Media Query specifica per smartphone stretti (< 600px) o con zoom schermo attivo */
+/* Media Query per smartphone: pulita, non rimpicciolisce più i testi chiave */
 @media (max-width: 600px) {
     .card {
         padding: 12px;
@@ -216,10 +214,5 @@ h1 {
 
     .dates-info {
         font-size: 0.75rem;
-    }
-
-    .report-row {
-        /* Rimpicciolisce leggermente il testo su schermi stretti/zoomati per farlo stare comodamente sulla riga */
-        font-size: 0.8rem;
     }
 }
