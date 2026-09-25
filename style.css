@@ -129,21 +129,22 @@ h1 {
     text-align: center;
 }
 
-/* Applica la griglia solo alle righe standard del report, lasciando fuori le materie di oggi */
+/* Applica la griglia solo alle righe standard del report */
 .report-row:not([style*="flex-direction: column"]) {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    padding: 6px 0;
+    gap: 8px; /* AGGIUNTO: Forza uno spazio di sicurezza tra sinistra e destra per evitare che si schiaccino */
+    padding: 6px 4px; /* Aggiunto un micro-padding laterale per non incollarsi ai bordi del box */
     border-bottom: 1px solid #f1f5f9;
     font-family: monospace;
-    font-size: 1rem;
+    font-size: 0.95rem; /* Leggermente più compatto per dare respiro su mobile/zoom */
 }
 
 /* Impedisce il testo a capo solo sulle righe standard */
 .report-row:not([style*="flex-direction: column"]) span,
 .report-row:not([style*="flex-direction: column"]) strong {
-    white-space: nowrap;
+    white-space: nowrap; 
 }
 
 /* Forza il lato destro delle righe standard a stare rigorosamente a destra */
