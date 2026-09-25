@@ -244,7 +244,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioSc
             }
             if (elementiLista.length > 0) {
                 elencoMaterieHtml = `<div class="report-row" style="flex-direction: column; align-items: flex-start;">
-                    <span>Materie di oggi (${nomeGiornoOggiStampa}):</span>
+                    <span>Materie di oggi (${nomeGiornoOggiStampa}):<br></span>
                     <strong style="margin-top: 4px; font-weight: normal; line-height: 1.4;">${elementiLista.join('<br>')}</strong>
                 </div>`;
             }
