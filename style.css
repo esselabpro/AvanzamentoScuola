@@ -129,21 +129,26 @@ h1 {
     text-align: center;
 }
 
-.report-row {
-    display: flex;
-    justify-content: space-between;
+/* Applica la griglia solo alle righe standard del report, lasciando fuori le materie di oggi */
+.report-row:not([style*="flex-direction: column"]) {
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
-    /* AGGIUNTO: Allinea perfettamente in verticale gli elementi sulla stessa riga */
     padding: 6px 0;
     border-bottom: 1px solid #f1f5f9;
     font-family: monospace;
     font-size: 1rem;
 }
 
-/* AGGIUNTO: Impedisce a etichette e valori di andare a capo spezzando la riga */
-.report-row span,
-.report-row strong {
+/* Impedisce il testo a capo solo sulle righe standard */
+.report-row:not([style*="flex-direction: column"]) span,
+.report-row:not([style*="flex-direction: column"]) strong {
     white-space: nowrap;
+}
+
+/* Forza il lato destro delle righe standard a stare rigorosamente a destra */
+.report-row:not([style*="flex-direction: column"]) strong {
+    text-align: right;
 }
 
 .report-row:last-of-type {
@@ -163,8 +168,9 @@ h1 {
 
 /* Riabilita il ritorno a capo solo dentro al box delle materie di oggi dove serve */
 .report-box .report-row[style*="flex-direction: column"] span,
-.report-box .report-row[style*="flex-direction: column"] strong {
-    white-space: normal;
+.report-box .report-row[style*="flex-direction: column"] strong,
+.report-box .report-row[style*="flex-direction: column"] div {
+    white-space: normal !important;
 }
 
 /* Più Evidenziata la riga dei "Giorni Fatti" e dei "Giorni Rimanenti" */
