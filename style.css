@@ -7,8 +7,10 @@
 
 /* Elimina gli a capo indesiderati del testo su mobile */
 html {
-    -webkit-text-size-adjust: 100%; /* Blocca lo zoom automatico su iOS */
-    text-size-adjust: 100%;         /* Blocca lo zoom automatico standard */
+    -webkit-text-size-adjust: 100%;
+    /* Blocca lo zoom automatico su iOS */
+    text-size-adjust: 100%;
+    /* Blocca lo zoom automatico standard */
 }
 
 body {
@@ -65,6 +67,7 @@ h1 {
     width: 0%;
     transition: width 0.6s ease;
 }
+
 .today-label {
     position: absolute;
     top: 34px;
@@ -129,10 +132,18 @@ h1 {
 .report-row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    /* AGGIUNTO: Allinea perfettamente in verticale gli elementi sulla stessa riga */
     padding: 6px 0;
     border-bottom: 1px solid #f1f5f9;
     font-family: monospace;
     font-size: 1rem;
+}
+
+/* AGGIUNTO: Impedisce a etichette e valori di andare a capo spezzando la riga */
+.report-row span,
+.report-row strong {
+    white-space: nowrap;
 }
 
 .report-row:last-of-type {
@@ -150,13 +161,19 @@ h1 {
     color: #08484d;
 }
 
+/* Riabilita il ritorno a capo solo dentro al box delle materie di oggi dove serve */
+.report-box .report-row[style*="flex-direction: column"] span,
+.report-box .report-row[style*="flex-direction: column"] strong {
+    white-space: normal;
+}
+
 /* Più Evidenziata la riga dei "Giorni Fatti" e dei "Giorni Rimanenti" */
 .report-row:nth-child(6),
 .report-row:nth-child(7) {
     /* Testo più scuro e marcato */
     font-weight: bold;
     color: #341674;
-    font-size: 1.03rem; 
+    font-size: 1.03rem;
     background-color: #edfbe6;
     border-radius: 6px;
     margin: 2px 0;
@@ -180,7 +197,7 @@ h1 {
     padding: 20px;
 }
 
-/* Media Query specifica per smartphone stretti (< 600px) */
+/* Media Query specifica per smartphone stretti (< 600px) o con zoom schermo attivo */
 @media (max-width: 600px) {
     .card {
         padding: 12px;
@@ -195,6 +212,7 @@ h1 {
     }
 
     .report-row {
+        /* Rimpicciolisce leggermente il testo su schermi stretti/zoomati per farlo stare comodamente sulla riga */
         font-size: 0.8rem;
     }
 }
