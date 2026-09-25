@@ -132,7 +132,7 @@ h1 {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto; /* minmax(0, 1fr) fa stringere l'etichetta a sinistra se lo spazio manca, salvando il numero a destra */
     align-items: center;
-    gap: 8px;
+    gap: 5px;
     padding: 6px 0;
     border-bottom: 1px solid #f1f5f9;
     font-family: monospace;
