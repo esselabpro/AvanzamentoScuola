@@ -134,7 +134,7 @@ h1 {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    gap: 8px; /* AGGIUNTO: Forza uno spazio di sicurezza tra sinistra e destra per evitare che si schiaccino */
+    gap: 5px; /* AGGIUNTO: Forza uno spazio di sicurezza tra sinistra e destra per evitare che si schiaccino */
     padding: 6px 4px; /* Aggiunto un micro-padding laterale per non incollarsi ai bordi del box */
     border-bottom: 1px solid #f1f5f9;
     font-family: monospace;
