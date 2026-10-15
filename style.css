@@ -53,9 +53,9 @@ h1 {
 .progress-container {
     position: relative;
     background-color: #d4ddea;
-    height: 40px;
+    height: 50px;
     border-radius: 8px;
-    margin: 20px 0 40px 0;
+    margin: 10px 0 20px 0;
 }
 
 .progress-bar {
@@ -89,7 +89,7 @@ h1 {
     height: 100%;
     display: flex;
     align-items: center;
-    font-size: 0.75rem;
+    font-size: 0.90rem;
     font-weight: bold;
     pointer-events: none;
 }
@@ -103,7 +103,7 @@ h1 {
 
 .bar-text-rimanenti {
     right: 0;
-    color: #475569;
+    color: #080808;
     padding-right: 8px;
     justify-content: flex-end;
 }
@@ -180,7 +180,7 @@ h1 {
     font-weight: bold;
     color: #341674;
     font-size: 1.03rem;
-    background-color: #edfbe6;
+    background-color: #e0f5d6;
     border-radius: 6px;
     margin: 2px 0;
     border-bottom: none;
