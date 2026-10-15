@@ -53,9 +53,9 @@ h1 {
 .progress-container {
     position: relative;
     background-color: #d4ddea;
-    height: 45px;
+    height: 42px;
     border-radius: 8px;
-    margin: 8px 0 18px 0;
+    margin: 8px 0 16px 0;
 }
 
 .progress-bar {
