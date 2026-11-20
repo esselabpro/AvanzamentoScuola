@@ -269,7 +269,7 @@ function elaboraEVisualizza(n_gg_date, intestazioneOrari, orarioMap, oraInizioSc
         </div>
 
         <div class="report-box">
-            <h3>Report Riepilogativo</h3>
+            <h3>Giorni Effettivi di Scuola</h3>
             <div class="report-row">
                 <span>Giorno attuale:</span>
                 <strong>${nomeGiornoOggiStampa}</strong>
